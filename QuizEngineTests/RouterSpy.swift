@@ -1,7 +1,4 @@
 //
-//  RouterSpy.swift
-//  QuizEngineTests
-//
 //  Created by Qazi Mudassar on 11/12/2023.
 //
 
