@@ -7,7 +7,7 @@ import QuizEngine
 
 class RouterSpy: Router {
     var routedQuestions: [String] = []
-    var routedResult: Result<String, String>? = nil
+    var routedResult: Resulte<String, String>? = nil
     var answerCallback: (String) -> Void = {_ in}
     
     func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
@@ -15,7 +15,7 @@ class RouterSpy: Router {
         self.answerCallback = answerCallback
     }
     
-    func routeTo(result: Result<String, String>) {
+    func routeTo(result: Resulte<String, String>) {
         routedResult = result
     }
 }

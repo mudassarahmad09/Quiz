@@ -47,7 +47,7 @@ class Flow<Question: Hashable, Answer, R: Router> where R.Question == Question, 
                        answerCallback: nextCallback(from: nextQuestion))
     }
     
-    private func result() -> Result<Question, Answer> {
-        Result(answer: answers, score: scoring(answers))
+    private func result() -> Resulte<Question, Answer> {
+        Resulte(answer: answers, score: scoring(answers))
     }
 }
