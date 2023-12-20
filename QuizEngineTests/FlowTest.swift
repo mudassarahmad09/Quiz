@@ -9,14 +9,11 @@ import XCTest
 @testable import QuizEngine
 
 class FlowTest: XCTestCase {
-    
-    let router = RouterSpy()
-    
     func test_start_withNoQuestion_doesNotRouterToQuestion  () {
         makeSUT(questions: []).start()
         XCTAssertTrue(router.routedQuestions.isEmpty)
     }
-        
+    
     func test_start_withOneQuestion_routesToCorrectQuestion() {
         makeSUT(questions: ["Q1"]).start()
         XCTAssertEqual(router.routedQuestions, ["Q1"])
@@ -99,8 +96,34 @@ class FlowTest: XCTestCase {
     }
     
     // MARK: - Helper
+    
+    private let router = RouterSpy()
+    private weak var weakSUT: Flow< String, String, RouterSpy >?
+    
+    override func tearDown() {
+        super.tearDown()
+        XCTAssertNil(weakSUT)
+    }
+    
     func makeSUT(questions: [String],
                  scoring: @escaping ([String: String]) -> Int = {_ in 0}) -> Flow< String, String, RouterSpy > {
-        Flow(questions: questions, router: router,scoring: scoring)
+        let sut = Flow(questions: questions, router: router,scoring: scoring)
+        weakSUT = sut
+        return sut
+    }
+    
+    class RouterSpy: Router {
+        var routedQuestions: [String] = []
+        var routedResult: Resulte<String, String>? = nil
+        var answerCallback: (String) -> Void = {_ in}
+        
+        func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
+            routedQuestions.append(question)
+            self.answerCallback = answerCallback
+        }
+        
+        func routeTo(result: Resulte<String, String>) {
+            routedResult = result
+        }
     }
 }
