@@ -102,7 +102,7 @@ class FlowTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNil(weakSUT)
+        XCTAssertNil(weakSUT, "Memory Leak detected. Weak refernce to the SUT instance is not nil")
     }
     
     func makeSUT(questions: [String],
