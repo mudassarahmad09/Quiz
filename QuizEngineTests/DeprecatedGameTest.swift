@@ -8,7 +8,8 @@
 import XCTest
 import QuizEngine
 
-class GameTest: XCTestCase {
+@available(*, deprecated)
+class DeprecatedGameTest: XCTestCase {
     
     let router = RouterSpy()
     var game: Game<String, String, RouterSpy>!
