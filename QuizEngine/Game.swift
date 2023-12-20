@@ -15,6 +15,7 @@ public class Game<Question, Answer, R: Router> where R.Question == Question, R.A
     }
 }
 
+@available(*, deprecated)
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswer: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
     let flow = Flow(questions: questions, router: router, scoring: {
         socring($0, correctAnswer: correctAnswer)
