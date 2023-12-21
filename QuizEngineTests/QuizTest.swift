@@ -10,36 +10,36 @@ import QuizEngine
 
 class QuizTestTest: XCTestCase {
     
-    private let delegate = RouterSpy()
-    private var game: Game<String, String, RouterSpy>!
+    private let delegate = DelegateSpy()
+    private var quiz: Game<String, String, DelegateSpy>!
     
     override func setUp() {
         super.setUp()
-        game = startGame(questions: ["Q1", "Q2"], router: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
+        quiz = startGame(questions: ["Q1", "Q2"], router: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
     }
     
     func test_startGame_answerZeroOutTwoCorrectly_scoresZero() {
         delegate.answerCallback("worng")
         delegate.answerCallback("worng")
         
-        XCTAssertEqual(delegate.routedResult!.score, 0)
+        XCTAssertEqual(delegate.handleResult!.score, 0)
     }
     
     func test_startGame_answerOneOutTwoCorrectly_scoresOne() {
         delegate.answerCallback("A1")
         delegate.answerCallback("worng")
         
-        XCTAssertEqual(delegate.routedResult!.score, 1)
+        XCTAssertEqual(delegate.handleResult!.score, 1)
     }
     
     func test_startGame_answerTwoOutTwoCorrectly_scoresTwo() {
         delegate.answerCallback("A1")
         delegate.answerCallback("A2")
-        XCTAssertEqual(delegate.routedResult!.score, 2)
+        XCTAssertEqual(delegate.handleResult!.score, 2)
     }
     
-    private class RouterSpy: Router {
-        var routedResult: Resulte<String, String>? = nil
+    private class DelegateSpy: Router {
+        var handleResult: Resulte<String, String>? = nil
         var answerCallback: (String) -> Void = {_ in}
         
         func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
@@ -47,7 +47,7 @@ class QuizTestTest: XCTestCase {
         }
         
         func routeTo(result: Resulte<String, String>) {
-            routedResult = result
+            handleResult = result
         }
     }
 }
