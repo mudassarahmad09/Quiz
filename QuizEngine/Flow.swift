@@ -25,8 +25,8 @@ class Flow<Delegate: QuizDeleget> {
     
     func start() {
         if let firstQuestion = questions.first {
-            delegate.handle(question: firstQuestion,
-                           answerCallback: nextCallback(from: firstQuestion))
+            delegate.answer(for: firstQuestion,
+                           completion: nextCallback(from: firstQuestion))
         } else {
             delegate.handle(result: result())
         }
@@ -47,8 +47,8 @@ class Flow<Delegate: QuizDeleget> {
         }
         
         let nextQuestion = questions[nextQuestionIndex]
-        delegate.handle(question: nextQuestion,
-                       answerCallback: nextCallback(from: nextQuestion))
+        delegate.answer(for: nextQuestion,
+                       completion: nextCallback(from: nextQuestion))
     }
     
     private func result() -> Resulte<Question, Answer> {
