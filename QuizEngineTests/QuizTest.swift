@@ -19,31 +19,31 @@ class QuizTestTest: XCTestCase {
     }
     
     func test_startQuiz_answerZeroOutTwoCorrectly_scoresZero() {
-        delegate.answerCallback("worng")
-        delegate.answerCallback("worng")
+        delegate.answerCompletion("worng")
+        delegate.answerCompletion("worng")
         
         XCTAssertEqual(delegate.handleResult!.score, 0)
     }
     
     func test_startQuiz_answerOneOutTwoCorrectly_scoresOne() {
-        delegate.answerCallback("A1")
-        delegate.answerCallback("worng")
+        delegate.answerCompletion("A1")
+        delegate.answerCompletion("worng")
         
         XCTAssertEqual(delegate.handleResult!.score, 1)
     }
     
     func test_startQuiz_answerTwoOutTwoCorrectly_scoresTwo() {
-        delegate.answerCallback("A1")
-        delegate.answerCallback("A2")
+        delegate.answerCompletion("A1")
+        delegate.answerCompletion("A2")
         XCTAssertEqual(delegate.handleResult!.score, 2)
     }
     
     private class DelegateSpy: QuizDeleget {
         var handleResult: Resulte<String, String>? = nil
-        var answerCallback: (String) -> Void = {_ in}
+        var answerCompletion: (String) -> Void = {_ in}
         
         func answer(for question: String, completion: @escaping (String) -> Void) {
-            self.answerCallback = completion
+            self.answerCompletion = completion
         }
         
         func handle(result: Resulte<String, String>) {
