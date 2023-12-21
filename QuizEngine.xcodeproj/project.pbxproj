@@ -24,6 +24,7 @@
 		809854AB2B330336006C21DD /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809854A62B3302E5006C21DD /* Question.swift */; };
 		809854AE2B342BC7006C21DD /* QuizDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809854AD2B342BC7006C21DD /* QuizDelegate.swift */; };
 		809854B02B342CB7006C21DD /* QuizTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809854AF2B342CB7006C21DD /* QuizTest.swift */; };
+		809854B22B344168006C21DD /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809854B12B344168006C21DD /* Quiz.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		809854A62B3302E5006C21DD /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		809854AD2B342BC7006C21DD /* QuizDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDelegate.swift; sourceTree = "<group>"; };
 		809854AF2B342CB7006C21DD /* QuizTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTest.swift; sourceTree = "<group>"; };
+		809854B12B344168006C21DD /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				80727CCE2B2749F3009CD539 /* DeprecatedGame.swift */,
 				80727CC82B274702009CD539 /* Resulte.swift */,
 				809854AD2B342BC7006C21DD /* QuizDelegate.swift */,
+				809854B12B344168006C21DD /* Quiz.swift */,
 				809854A62B3302E5006C21DD /* Question.swift */,
 			);
 			path = QuizEngine;
@@ -312,6 +315,7 @@
 			files = (
 				80727CCF2B2749F3009CD539 /* DeprecatedGame.swift in Sources */,
 				809854AE2B342BC7006C21DD /* QuizDelegate.swift in Sources */,
+				809854B22B344168006C21DD /* Quiz.swift in Sources */,
 				80727CC92B274702009CD539 /* Resulte.swift in Sources */,
 				809854A72B3302E5006C21DD /* Question.swift in Sources */,
 				801C47A22B1F9FBE003E4493 /* QuizEngine.docc in Sources */,
