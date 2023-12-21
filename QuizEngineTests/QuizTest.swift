@@ -6,16 +6,33 @@
 //
 
 import XCTest
-import QuizEngine
+@testable import QuizEngine
+
+final class Quiz {
+    
+    let flow: Any
+    
+    init(flow: Any) {
+        self.flow = flow
+    }
+    
+    static func start<Question, Answer: Equatable, Delegate: QuizDeleget>(questions: [Question], delegate: Delegate, correctAnswer: [Question: Answer]) -> Quiz where Delegate.Question == Question, Delegate.Answer == Answer {
+        let flow = Flow(questions: questions, delegate: delegate, scoring: {
+            socring($0, correctAnswer: correctAnswer)
+        })
+        flow.start()
+        return Quiz(flow: flow)
+    }
+}
 
 class QuizTestTest: XCTestCase {
     
     private let delegate = DelegateSpy()
-    private var quiz: Game<String, String, DelegateSpy>!
+    private var quiz: Quiz!
     
     override func setUp() {
         super.setUp()
-        quiz = startGame(questions: ["Q1", "Q2"], router: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
+        quiz = Quiz.start(questions: ["Q1", "Q2"], delegate: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
     }
     
     func test_startQuiz_answerZeroOutTwoCorrectly_scoresZero() {
@@ -38,15 +55,15 @@ class QuizTestTest: XCTestCase {
         XCTAssertEqual(delegate.handleResult!.score, 2)
     }
     
-    private class DelegateSpy: Router {
+    private class DelegateSpy: QuizDeleget {
         var handleResult: Resulte<String, String>? = nil
         var answerCallback: (String) -> Void = {_ in}
         
-        func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
+        func handle(question: String, answerCallback: @escaping (String) -> Void) {
             self.answerCallback = answerCallback
         }
         
-        func routeTo(result: Resulte<String, String>) {
+        func handle(result: Resulte<String, String>) {
             handleResult = result
         }
     }

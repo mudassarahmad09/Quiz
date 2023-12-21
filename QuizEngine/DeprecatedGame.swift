@@ -51,7 +51,7 @@ private class QuizDelegateToRouterAdpter<R: Router>: QuizDeleget {
     }
 }
 
-private func socring<Question, Answer: Equatable>(_ answers: [Question: Answer], correctAnswer: [Question: Answer]) -> Int {
+func socring<Question, Answer: Equatable>(_ answers: [Question: Answer], correctAnswer: [Question: Answer]) -> Int {
     return answers.reduce(0) { (socre, tuple) in
         return socre + (correctAnswer[tuple.key] == tuple.value ? 1 : 0)
     }
