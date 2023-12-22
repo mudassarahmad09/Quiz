@@ -69,12 +69,14 @@ class FlowTest: XCTestCase {
         XCTAssertTrue(delegate.completedQuiz.isEmpty)
     }
     
-    func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_delegateResultHandling() {
+    func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_completeQuiz() {
         let sut =  makeSUT(questions: ["Q1","Q2"])
         sut.start()
         delegate.answerCompletion("A1")
         delegate.answerCompletion("A2")
-        XCTAssertEqual(delegate.handleResult!.answer, ["Q1": "A1", "Q2": "A2"])
+        
+        XCTAssertEqual(delegate.completedQuiz.count, 1)
+        XCTAssertTrue(delegate.completedQuiz[0].elementsEqual([("Q1", "A1"), ("Q2", "A2")], by: ==))
     }
     
     func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_scores() {
