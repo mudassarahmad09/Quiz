@@ -39,15 +39,15 @@ class FlowTest: XCTestCase {
     func test_startAndAnswerFirstQuestionAndSecondQuestion_withThreeQuestions_delegateSecondAndThirdQuestionHandling() {
         let sut =  makeSUT(questions: ["Q1","Q2","Q3"])
         sut.start()
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
+        delegate.answerCompletions[0]("A1")
+        delegate.answerCompletions[1]("A2")
         XCTAssertEqual(delegate.questionsAsked, ["Q1","Q2","Q3"])
     }
     
     func test_startAndAnswerFirstQuestion_withOneQuestions_doesNotDelegateAnotherQuestionHandling() {
         let sut =  makeSUT(questions: ["Q1"])
         sut.start()
-        delegate.answerCompletion("A1")
+        delegate.answerCompletions[0]("A1")
         XCTAssertEqual(delegate.questionsAsked, ["Q1"])
     }
     
@@ -65,18 +65,32 @@ class FlowTest: XCTestCase {
     func test_startAndAnswerFirstQuestion_withTwoQuestion_doesNotCompleteQuiz() {
         let sut =  makeSUT(questions: ["Q1", "Q2"])
         sut.start()
-        delegate.answerCompletion("A1")
+        delegate.answerCompletions[0]("A1")
         XCTAssertTrue(delegate.completedQuiz.isEmpty)
     }
     
     func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_completeQuiz() {
         let sut =  makeSUT(questions: ["Q1","Q2"])
         sut.start()
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
+        delegate.answerCompletions[0]("A1")
+        delegate.answerCompletions[1]("A2")
         
         XCTAssertEqual(delegate.completedQuiz.count, 1)
         assertEqual(a1: delegate.completedQuiz[0], a2:  ([("Q1", "A1"), ("Q2", "A2")]))
+    }
+    
+    func test_startAndAnswerFirstAndSecondQuestionTwice_withTwoQuestions_completeQuizTwice() {
+        let sut =  makeSUT(questions: ["Q1","Q2"])
+        sut.start()
+        delegate.answerCompletions[0]("A1")
+        delegate.answerCompletions[1]("A2")
+        
+        delegate.answerCompletions[0]("A1-1")
+        delegate.answerCompletions[1]("A2-2")
+        
+        XCTAssertEqual(delegate.completedQuiz.count, 2)
+        assertEqual(a1: delegate.completedQuiz[0], a2:  ([("Q1", "A1"), ("Q2", "A2")]))
+        assertEqual(a1: delegate.completedQuiz[1], a2:  ([("Q1", "A1-1"), ("Q2", "A2-2")]))
     }
         
     // MARK: - Helper
@@ -109,11 +123,11 @@ class FlowTest: XCTestCase {
         var questionsAsked: [String] = []
         var handleResult: Resulte<String, String>? = nil
         var completedQuiz: [[(String, String)]] = []
-        var answerCompletion: (String) -> Void = {_ in}
+        var answerCompletions: [(String) -> Void] = []
         
         func answer(for question: String, completion: @escaping (String) -> Void) {
             questionsAsked.append(question)
-            self.answerCompletion = completion
+            self.answerCompletions.append(completion)
         }
         
         func didCompleteQuiz(withAnswers: [(question: String, answer: String)]) {
