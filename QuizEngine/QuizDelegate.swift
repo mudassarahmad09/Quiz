@@ -18,7 +18,6 @@ public protocol QuizDeleget {
     func handle(result: Resulte<Question, Answer>)
 }
 
-#warning("Delete this at some point")
 extension QuizDeleget {
     func didCompleteQuiz(withAnswers:[(question: Question, answer: Answer)]){}
 }
