@@ -78,26 +78,7 @@ class FlowTest: XCTestCase {
         XCTAssertEqual(delegate.completedQuiz.count, 1)
         assertEqual(a1: delegate.completedQuiz[0], a2:  ([("Q1", "A1"), ("Q2", "A2")]))
     }
-    
-    func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_scores() {
-        let sut =  makeSUT(questions: ["Q1","Q2"], scoring: {_ in 10})
-        sut.start()
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
-        XCTAssertEqual(delegate.handleResult!.score, 10)
-    }
-    
-    func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestions_scoresWithRightAnswer() {
-        var recivedAnswer = [String: String]()
-        let sut =  makeSUT(questions: ["Q1","Q2"], scoring: { answer in
-            recivedAnswer = answer
-            return 20})
-        sut.start()
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
-        XCTAssertEqual(recivedAnswer, ["Q1": "A1", "Q2": "A2"])
-    }
-    
+        
     // MARK: - Helper
     
     private let delegate = DelegateSpy()
@@ -108,9 +89,8 @@ class FlowTest: XCTestCase {
         XCTAssertNil(weakSUT, "Memory Leak detected. Weak refernce to the SUT instance is not nil")
     }
     
-    func makeSUT(questions: [String],
-                 scoring: @escaping ([String: String]) -> Int = {_ in 0}) -> Flow< DelegateSpy > {
-        let sut = Flow(questions: questions, delegate: delegate,scoring: scoring)
+    func makeSUT(questions: [String]) -> Flow< DelegateSpy > {
+        let sut = Flow(questions: questions, delegate: delegate)
         weakSUT = sut
         return sut
     }
