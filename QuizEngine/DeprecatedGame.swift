@@ -57,6 +57,12 @@ private class QuizDelegateToRouterAdpter<R: Router>: QuizDeleget where R.Answer:
         router.routeTo(result: result)
     }
     
+    private func socring(_ answers: [R.Question: R.Answer], correctAnswer: [R.Question: R.Answer]) -> Int {
+        return answers.reduce(0) { (socre, tuple) in
+            return socre + (correctAnswer[tuple.key] == tuple.value ? 1 : 0)
+        }
+    }
+    
     func handle(result: Resulte<R.Question, R.Answer>) {}
 }
 
