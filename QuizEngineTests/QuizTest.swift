@@ -39,6 +39,9 @@ class QuizTestTest: XCTestCase {
     }
     
     private class DelegateSpy: QuizDeleget {
+        func didCompleteQuiz(withAnswers: [(question: String, answer: String)]) {
+        }
+        
         var handleResult: Resulte<String, String>? = nil
         var answerCompletion: (String) -> Void = {_ in}
         
