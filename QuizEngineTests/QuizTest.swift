@@ -10,47 +10,40 @@ import QuizEngine
 
 class QuizTestTest: XCTestCase {
     
-    private let delegate = DelegateSpy()
     private var quiz: Quiz!
     
-    override func setUp() {
-        super.setUp()
-        quiz = Quiz.start(questions: ["Q1", "Q2"], delegate: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
-    }
-    
     func test_startQuiz_answerZeroOutTwoCorrectly_scoresZero() {
-        delegate.answerCompletion("worng")
-        delegate.answerCompletion("worng")
-        
-        XCTAssertEqual(delegate.handleResult!.score, 0)
-    }
-    
-    func test_startQuiz_answerOneOutTwoCorrectly_scoresOne() {
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("worng")
-        
-        XCTAssertEqual(delegate.handleResult!.score, 1)
-    }
-    
-    func test_startQuiz_answerTwoOutTwoCorrectly_scoresTwo() {
+        let delegate = DelegateSpy()
+        quiz = Quiz.start(questions: ["Q1", "Q2"], delegate: delegate, correctAnswer: ["Q1": "A1", "Q2": "A2"])
         delegate.answerCompletion("A1")
         delegate.answerCompletion("A2")
-        XCTAssertEqual(delegate.handleResult!.score, 2)
+        
+        XCTAssertEqual(delegate.completedQuiz.count, 1)
+        assertEqual(a1: delegate.completedQuiz[0], a2:  ([("Q1", "A1"), ("Q2", "A2")]))
     }
     
-    private class DelegateSpy: QuizDeleget {
-        func didCompleteQuiz(withAnswers: [(question: String, answer: String)]) {
-        }
-        
-        var handleResult: Resulte<String, String>? = nil
+    private func assertEqual(a1: [(String, String)],
+                             a2: [(String, String)],
+                             file: StaticString = #filePath,
+                             line: UInt = #line) {
+        XCTAssertTrue(a1.elementsEqual(a2, by: ==),
+                      "\(a1) is not equal to \(a2)",
+                      file: file,
+                      line: line)
+    }
+    
+    class DelegateSpy: QuizDeleget {
+        var completedQuiz: [[(String, String)]] = []
         var answerCompletion: (String) -> Void = {_ in}
         
         func answer(for question: String, completion: @escaping (String) -> Void) {
             self.answerCompletion = completion
         }
         
-        func handle(result: Resulte<String, String>) {
-            handleResult = result
+        func didCompleteQuiz(withAnswers: [(question: String, answer: String)]) {
+            completedQuiz.append(withAnswers)
         }
+        
+        func handle(result: QuizEngine.Resulte<String, String>) {}
     }
 }
