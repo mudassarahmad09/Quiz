@@ -121,7 +121,6 @@ class FlowTest: XCTestCase {
     
     class DelegateSpy: QuizDeleget {
         var questionsAsked: [String] = []
-        var handleResult: Resulte<String, String>? = nil
         var completedQuiz: [[(String, String)]] = []
         var answerCompletions: [(String) -> Void] = []
         
@@ -133,9 +132,6 @@ class FlowTest: XCTestCase {
         func didCompleteQuiz(withAnswers: [(question: String, answer: String)]) {
             completedQuiz.append(withAnswers)
         }
-        
-        func handle(result: QuizEngine.Resulte<String, String>) {
-            handleResult = result
-        }
+
     }
 }

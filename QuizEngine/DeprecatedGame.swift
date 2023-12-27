@@ -63,6 +63,5 @@ private class QuizDelegateToRouterAdpter<R: Router>: QuizDeleget where R.Answer:
         }
     }
     
-    func handle(result: Resulte<R.Question, R.Answer>) {}
 }
 
