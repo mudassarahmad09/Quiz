@@ -34,7 +34,6 @@ class Flow<Delegate: QuizDeleget> {
             delegate.answer(for: question, completion: answer(for: question, at: index))
         }else {
             delegate.didCompleteQuiz(withAnswers: newAnswers)
-            delegate.handle(result: result())
         }
     }
     
