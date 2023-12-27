@@ -36,16 +36,6 @@ class QuizTestTest: XCTestCase {
         assertEqual(a1: delegate.completedQuiz[1], a2:  ([("Q1", "A1-1"), ("Q2", "A2-2")]))
     }
     
-    private func assertEqual(a1: [(String, String)],
-                             a2: [(String, String)],
-                             file: StaticString = #filePath,
-                             line: UInt = #line) {
-        XCTAssertTrue(a1.elementsEqual(a2, by: ==),
-                      "\(a1) is not equal to \(a2)",
-                      file: file,
-                      line: line)
-    }
-    
     class DelegateSpy: QuizDeleget {
         var completedQuiz: [[(String, String)]] = []
         var answerCompletions: [(String) -> Void] = []
