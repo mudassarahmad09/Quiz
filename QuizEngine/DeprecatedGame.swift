@@ -65,3 +65,9 @@ private class QuizDelegateToRouterAdpter<R: Router>: QuizDeleget where R.Answer:
     
 }
 
+@available(*, deprecated)
+public struct Resulte<Question: Hashable, Answer> {
+    public var answer: [Question: Answer]
+    public var score: Int
+    
+}
