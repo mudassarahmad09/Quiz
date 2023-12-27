@@ -7,7 +7,7 @@
 
 import Foundation
 
-@available(*, deprecated)
+@available(*, deprecated, message: "use QuizDelegate insted")
 public protocol Router {
     associatedtype Question: Hashable
     associatedtype Answer
@@ -16,7 +16,7 @@ public protocol Router {
 }
 
 
-@available(*, deprecated)
+@available(*, deprecated, message: "use Quiz insted")
 public class Game<Question, Answer, R: Router> {
     let flow: Any
     
@@ -25,7 +25,7 @@ public class Game<Question, Answer, R: Router> {
     }
 }
 
-@available(*, deprecated)
+@available(*, deprecated, message: "use Quiz.start insted")
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswer: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
     let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdpter(router, correctAnswer))
     flow.start()
