@@ -34,11 +34,18 @@ class ScoreTest: XCTestCase {
         XCTAssertEqual(score, 2)
     }
     
-    func test_withTooManyAnswers_twoMatchingMatchings_scoreTwo() {
+    func test_withTooManyAnswers_twoMatchingAnswers_scoreTwo() {
         let score = BasicScore.score(
             for: ["an answer","another answer", "an extra answer"],
             comparingTo: ["an answer","another answer"])
         XCTAssertEqual(score, 2)
+    }
+    
+    func test_withTooManyCorrectAnswers_oneMatchingAnswers_scoreOne() {
+        let score = BasicScore.score(
+            for: ["not matching","another answer"],
+            comparingTo: ["an answer","another answer", "an extra answer"])
+        XCTAssertEqual(score, 1)
     }
     
     private class BasicScore {
