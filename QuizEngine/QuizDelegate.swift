@@ -18,6 +18,3 @@ public protocol QuizDeleget {
     func handle(result: Resulte<Question, Answer>)
 }
 
-extension QuizDeleget {
-    func didCompleteQuiz(withAnswers:[(question: Question, answer: Answer)]){}
-}
