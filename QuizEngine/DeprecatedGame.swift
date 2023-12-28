@@ -18,18 +18,18 @@ public protocol Router {
 
 @available(*, deprecated, message: "use Quiz insted")
 public class Game<Question, Answer, R: Router> {
-    let flow: Any
+    let quiz: Quiz
     
-    init(flow: Any) {
-        self.flow = flow
+    init(quiz: Quiz) {
+        self.quiz = quiz
     }
 }
 
 @available(*, deprecated, message: "use Quiz.start insted")
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswer: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
-    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdpter(router, correctAnswer))
-    flow.start()
-    return Game(flow: flow)
+    let adpter =  QuizDelegateToRouterAdpter(router, correctAnswer)
+    let quiz = Quiz.start(questions: questions, delegate: adpter)
+    return Game(quiz: quiz)
 }
 
 @available(*, deprecated)
