@@ -65,7 +65,7 @@ private class QuizDelegateToRouterAdpter<R: Router>: QuizDeleget where R.Answer:
     
 }
 
-@available(*, deprecated)
+@available(*, deprecated, message: "Socreing is not avaible now")
 public struct Resulte<Question: Hashable, Answer> {
     public var answer: [Question: Answer]
     public var score: Int
